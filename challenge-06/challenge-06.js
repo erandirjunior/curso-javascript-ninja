@@ -96,10 +96,10 @@ function convertToHex(color) {
             break;
 
         default:
-            return 'Não temos o equivalente hexadecimal para ' + color + '.'
+            return 'Não temos o equivalente hexadecimal para ' + color + '.';
     }
 
-    return 'O hexadecimal para a cor ' + color + ' é ' + colorHex + '.'
+    return 'O hexadecimal para a cor ' + color + ' é ' + colorHex + '.';
 }
 
 /*
