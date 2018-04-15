@@ -54,7 +54,7 @@
 	- O desafio é fazer o retorno sem usar "if" ou "switch".
 	*/
 	function isOperatorValid(operator) {
-		return typeof(operation[operator]) === 'function';
+		return !!operation[operator];
 	}
 
 	/*
@@ -80,7 +80,7 @@
 			}
 
 			return operation[operator](x, y);
-		}
+		};
 	}
 
 	/*
@@ -135,10 +135,13 @@
 	- O segundo, a função de soma, passando os dois operandos.
 	- Se "sum" for "false", mostrar no console a mensagem de erro.
 	*/
-	if (typeof sum !== 'function') {
-		console.log(showErrorMessage(operationSignal));
+	if (sum) {
+		number1 = 10;
+		number2 = 12;
+
+		console.log(showOperationMessage(operationSignal, number1, number2), sum(number1, number2));
 	}
-	console.log(showOperationMessage(operationSignal, number1, number2), sum(number1, number2));
+	
 
 	/*
 	Repita desde o "PASSO 2" com as operações de subtração, multiplicação,
@@ -148,34 +151,53 @@
 	operationSignal = '-';
 	var subtraction = calculator(operationSignal);
 
-	if (typeof subtraction !== 'function') {
+	if (subtraction) {
+		number1 = 15;
+		number2 = 10;
+
+		console.log(showOperationMessage(operationSignal, number1, number2), subtraction(number1, number2));
+	} else {
 		console.log(showErrorMessage(operationSignal));
 	}
-	console.log(showOperationMessage(operationSignal, number1, number2), subtraction(number1, number2));
+	
 
 	operationSignal = '*';
 	var multiplication = calculator(operationSignal);
 
-	if (typeof multiplication !== 'function') {
+	if (multiplication) {
+		number1 = 20;
+		number2 = 5;
+
+		console.log(showOperationMessage(operationSignal, number1, number2), multiplication(number1, number2));
+	} else {
 		console.log(showErrorMessage(operationSignal));
 	}
-	console.log(showOperationMessage(operationSignal, number1, number2), multiplication(number1, number2));
+	
 
 	operationSignal = '/';
 	var division = calculator(operationSignal);
 
-	if (typeof division !== 'function') {
+	if (division) {
+		number1 = 40;
+		number2 = 10;
+
+		console.log(showOperationMessage(operationSignal, number1, number2), division(number1, number2));
+	} else {
 		console.log(showErrorMessage(operationSignal));
 	}
-	console.log(showOperationMessage(operationSignal, number1, number2), division(number1, number2));
+	
 
 	operationSignal = '%';
 	var mod = calculator(operationSignal);
 
-	if (typeof mod !== 'function') {
+	if (mod) {
+		number1 = 4;
+		number2 = 2;
+		console.log(showOperationMessage(operationSignal, number1, number2), mod(number1, number2));
+	} else {
 		console.log(showErrorMessage(operationSignal));
 	}
-	console.log(showOperationMessage(operationSignal, number1, number2), mod(number1, number2));
+	
 
 	/*
 	Repita o PASSO 2 novamente, mas passando um operador inválido, para ver se
@@ -184,9 +206,12 @@
 	operationSignal = '.';
 	var otherVar = calculator(operationSignal);
 
-	if (typeof otherVar !== 'function') {
-		console.log(showErrorMessage(operationSignal));
-	} else {
+	if (otherVar) {
+		number1 = 4;
+		number2 = 2;
+
 		console.log(showOperationMessage(operationSignal, number1, number2), otherVar(number1, number2));
+	} else {
+		console.log(showErrorMessage(operationSignal));
 	}
 })();
