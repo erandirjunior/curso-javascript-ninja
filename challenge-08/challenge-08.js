@@ -27,7 +27,7 @@ Crie uma função literal chamada `showName`. Essa função deve retornar o
 seu nome.
 */
 function showName() {
-	return 'showName';
+	return 'Erandir Junior';
 }
 
 /*
@@ -82,7 +82,7 @@ function calculator(operator) {
 			default:
 				return 'Operação inválida.';
 		}
-		return 'Resultado da operação: ' + x + ' ' + operator +  ' ' + y + ' = ' + result +  '.';
+		return 'Resultado da operação: ' + x + ' ' + operator + ' ' + y + ' = ' + result +  '.';
 	};
 }
 
