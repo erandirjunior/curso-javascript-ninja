@@ -160,6 +160,7 @@
 	*/
 	var map = newBrasil.map(function(item) {
 		item.id++;
+		item.estado += ' pertence ao Brasil';
 		return item;
 	});
 
