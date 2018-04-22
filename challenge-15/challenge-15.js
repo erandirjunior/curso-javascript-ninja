@@ -27,13 +27,13 @@
     this.name = name;
     this.lastName = lastName;
     this.age = age;
-    this.getFullName = function() {
+    this.getFullName = function getFullName() {
       return this.name + ' ' + this.lastName;
     };
-    this.getAge = function() {
+    this.getAge = function getAge() {
       return this.age;
     };
-    this.addAge = function() {
+    this.addAge = function addAge() {
       this.age += arguments[0];
       return this;
     };
@@ -77,12 +77,8 @@
   - "[NOME COMPLETO] agora tem [NOVA IDADE] anos."
   */
   console.log( '\nNova idade das pessoas:' );
-  var newMaria = maria.addAge(10);
-  var newErandir = erandir.addAge(9);
-  var newJessica = jessica.addAge(9);
-
-  console.log(newMaria.getFullName() + ' agora tem ' + newMaria.getAge() + ' anos.');
-  console.log(newErandir.getFullName() + ' agora tem ' + newErandir.getAge() + ' anos.');
-  console.log(newJessica.getFullName() + ' agora tem ' + newJessica.getAge() + ' anos.');
+  console.log(maria.getFullName() + ' agora tem ' + maria.addAge(10).getAge() + ' anos.');
+  console.log(erandir.getFullName() + ' agora tem ' + erandir.addAge(9).getAge() + ' anos.');
+  console.log(jessica.getFullName() + ' agora tem ' + jessica.addAge(9).getAge() + ' anos.');
 
 })();
