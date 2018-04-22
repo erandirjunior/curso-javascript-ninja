@@ -54,9 +54,7 @@
 	*/
 	console.log( '\nOperation:' );
 	var operation = justMod2Or3.reduce(function(acumulado, atual) {
-		acumulado++;
-		acumulado *= atual;
-		return acumulado;
+		return (acumulado + 1 ) * atual;
 	}, 0);
 
 	console.log(operation);
@@ -68,10 +66,8 @@
 	*/
 	console.log( '\nOperation 2:' );
 	var operation2 = justMod2Or3.reduceRight(function(acumulado, atual) {
-		acumulado++;
-		acumulado *= atual;
-		return acumulado;
-	});
+		return (acumulado + 1 ) * atual;
+	}, 0);
 
 	console.log(operation2);
 
@@ -87,8 +83,8 @@
 	var name = ['Ju', 'ni', 'or'];
 
 	console.log(name.reduce(function(acumulado, atual) {
-		return acumulado += 'p' + atual;
-	}));
+		return acumulado += 'P' + atual;
+	}, ''));
 
 	/*
 	Crie uma variável chamada `inversedName`, que reduzirá o array em uma string
@@ -116,26 +112,23 @@
 	o que acontece ;)
 	*/
 	console.log( '\nExiste um { number: 2 } em numberObjects?' );
-	var indice = numberObjects.map(function(item) {
-		return item.number
-	}).indexOf(2);
+	var obj = numberObjects[1];
 
-	if (indice > -1) {
+	if (numberObjects.indexOf(obj) > -1) {
 		console.log('Existe um objeto { number: 2 } em numberObjects!');
 	} else {
 		console.log('Não existe um objeto { number: 2 } em numberObjects :(');
 	}
+
+	console.log('Retorna true pois obj é uma referência ao segundo indice do array numberObjects, caso fosse passado direto o objeto para o indexOf, retorna false pos objetos não são iguais');
 
 	/*
 	Fazendo o mesmo do exercício acima, mas começando a buscar do último índice,
 	será que obtemos um resultado diferente? Faça a busca a partir do índice 2.
 	*/
 	console.log( '\nE buscando a partir do último índice, o { number: 2 } existe?' );
-	indice = numberObjects.map(function(item) {
-		return item.number;
-	}).lastIndexOf(2);
-
-	if (indice > -1) {
+	
+	if (numberObjects.lastIndexOf(obj, 2) > -1) {
 		console.log('Existe um objeto { number: 2 } em numberObjects!');
 	} else {
 		console.log('Não existe um objeto { number: 2 } em numberObjects :(');
