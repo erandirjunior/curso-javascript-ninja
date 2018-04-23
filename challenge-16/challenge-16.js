@@ -20,9 +20,9 @@
 	console.log( 'As letras do seu nome:' );
 	var name = 'Antonio';
 
-	name.split('').forEach(function(item, index) {
-		console.log(item + ' é a ' + (index + 1) + 'ª letra do meu nome.');
-	});
+	for (var i = 0, len = name.length; i < len; i++) {
+		console.log(name[i] + ' é a ' + (i + 1) + 'ª letra do meu nome.');
+	}
 
 	/*
 	- Declare uma variável chamada `fullName`, que receba seu nome completo,
@@ -54,12 +54,8 @@
 	console.log( '\nMeus amigos:' );
 	var arr = ['Junior', 'Pedro', 'Marcos', 'Bruno', 'Mateus'];
 	console.log(arr.reduce(function(acumulado, atual, index, array) {
-		if (index === array.length - 1) {
-			acumulado += ' e ' + atual
-		} else {
-			acumulado += ', ' + atual
-		}
-		return acumulado;
+		var separator = index === array.length - 1 ? ' e ' : ', ';
+		return acumulado + separator + atual;
 	}).concat(' são meus amigos.'));
 
 	/*
@@ -74,7 +70,7 @@
 	faz a busca do final para o início da string.
 	*/
 	console.log( '\nParte de uma string:' );
-	console.log('Fernando'.substring(3));
+	console.log('Fernando'.substring(8, 3));
 
 	/*
 	Declare uma variável chamada `myName`, que receba o seu primeiro nome,
