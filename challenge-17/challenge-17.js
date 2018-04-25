@@ -44,14 +44,14 @@
 	minúsculo por "0" (número zero). Mostre o resultado no console:
 	*/
 	console.log( '\nTrocando de "D" a "h" por "0":' );
-	console.log(text.replace(/[D-Za-h]/g, '0'));
+	console.log(text.replace(/[D-Za-h]/g, 0));
 
 	/*
 	Substitua todos os "A" (maiúsculos ou minúsculos) por "4".
 	Mostre o resultado no console:
 	*/
 	console.log( '\nTrocando "A" e "a" por "4":' );
-	console.log(text.replace(/A/gi, '4'));
+	console.log(text.replace(/A/gi, 4));
 
 	/*
 	Substitua a frase "O Centauro de Luvas", deixando-a em caixa alta, usando
@@ -107,6 +107,7 @@
 	*/
 	console.log( '\nRegex que vai fazer o match com as datas do texto:' );
 	var regexDate = /(\d\d) de (julho|junho) de (\d\d\d\d)/g;
+	console.log(regexDate);
 
 	/*
 	Agora crie a função que irá fazer o replace dos dados. A função será chamada
@@ -116,7 +117,7 @@
 	console o resultado.
 	*/
 	console.log( '\nReplace de datas:' );
-	function replaceDate(totalCaptura, day, month, year) {
+	function replaceDate(regex, day, month, year) {
 		return day + '/' + getMonthNumber(month) + '/' + year;
 	}
 
