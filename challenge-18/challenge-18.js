@@ -20,7 +20,7 @@
 	*/
 	console.log( 'Limpando CPFs:' );
 	function cleanCPF(cpf) {
-		return cpf.match(/\d/g).join('');
+		return cpf.replace(/\D/g, '');
 	}
 
 	var cpf1 = cleanCPF('049-214 3421-1');
@@ -34,19 +34,19 @@
 	console.log(cpf4);
 
 	/*
-	Usando os CPFs limpos acima, deixe-os com a formatação correta de CPF.
+	UsanDo os CPFs limpos acima, deixe-os com a formatação correta de CPF.
 	Ex.: "999.999.999-99"
 	Mostre o resultado no console.
 	*/
 	console.log( '\nFormatando CPFs corretamente:' );
 
-	console.log(cpf1.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4"));
+	console.log(cpf1.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4'));
 
-	console.log(cpf2.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4"));
+	console.log(cpf2.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4'));
 
-	console.log(cpf3.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4"));
+	console.log(cpf3.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4'));
 
-	console.log(cpf4.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4"));
+	console.log(cpf4.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4'));
 
 	/*
 	Crie uma expressão regular que faça match com as palavras "junho" ou "julho",
@@ -60,7 +60,7 @@
 	["junho", "julho"]
 	*/
 	console.log( '\nMatch com as palavras "junho" ou "julho" para a frase "Os meses de janeiro, junho e julho começam com a letra j.":' );
-	console.log('junho" ou "julho" para a frase "Os meses de janeiro, junho e julho começam com a letra j.'.match(/ju[nl]ho/g));
+	console.log('Os meses de janeiro, junho e julho começam com a letra j.'.match(/ju[nl]ho/g));
 
 	/*
 	Crie uma expressão regular que faça o match com a abertura de uma tag
@@ -72,7 +72,7 @@
 	["<div>", "<section>", "<blockquote>"]
 	*/
 	console.log( '\nMatch com a abertura de uma tag HTML:' );
-	console.log('<div><section><blockquote>Texto <img /></blockquote></section></div>'.match(/<(\w+)>/g));
+	console.log('<div><section><blockquote>Texto <img /></blockquote></section></div>'.match(/<\w+>/g));
 
 	/*
 	Crie uma expressão regular que faça o match com uma tag HTML vazia, casando
@@ -84,7 +84,7 @@
 	["<li></li>", "<li></li>", "<span></span>"]
 	*/
 	console.log( '\nMatch com tags HTML vazias (abertura e fechamento da tag):' );
-	console.log('<div><ul><li></li><li></li><li><span></span></li></ul></div>'.match(/<(\w+)><(\/\w+)>/g));
+	console.log('<div><ul><li></li><li></li><li><span></span></li></ul></div>'.match(/<\w+><\/\w+>/g));
 
 	/*
 	Vamos complicar um pouco agora :D
@@ -111,9 +111,7 @@
 	console.log( '\nFazer replace dos textos das tags:' );
 	var text = '<h1>Título da página</h1><p>Este é um parágrafo</p><footer>Rodapé</footer>';
 
-	text.replace(/(<(\w+)>)([^>(.*)<]+)(<\/\w+>)/g, function(regex, tagOpen, element, content, tagClose) {
-
-		console.log(tagOpen + 'O texto dentro da tag "' + element + '" é "' + content + '"' + tagClose + '\n');
-	});
+	console.log(text.replace(/(<(\w+)>)([^<]+)(<\/\w+>)/g, '$1O texto dentro da tag "$2" é "$3"$4\n'
+	));
 
 })();
