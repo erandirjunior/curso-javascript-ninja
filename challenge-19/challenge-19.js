@@ -89,17 +89,13 @@
 	console.log( '\nQuais classes CSS existem na marcação abaixo?\n\n', markup, '\n' );
 
 	var classes = ['container', 'text', 'date', 'excerpt', 'main'];
-	
+
 	function hasClass(markup, cssClass) {
-		return new RegExp('[^<]["\']?' + cssClass + '["\']?').test(markup);
+		return new RegExp('class=["\'].*' + cssClass + '.*["\']').test(markup);
 	}
 
-	console.log(markup.match(/(<\w+(?:.+?)>)/gm));
-
-	markup.replace(/(<\w+(?:.+?)>)/gm, function(match) {
-		classes.forEach(function(item) {
-			console.log(hasClass(match, item) + ' para a classe ' + item);
-		});
+	classes.forEach(function(cssClass) {
+		console.log(hasClass(markup, cssClass) + ' para a classe ' + cssClass);
 	});
 
 })();
