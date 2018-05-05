@@ -1,4 +1,4 @@
-(function(win, doc) {
+(function(window, document) {
 
     'use strict';
 
@@ -18,13 +18,9 @@
     nome, `username` deve receber "Desconhecido".
     Com a resposta, mostre um alert com a mensagem "Bem vindo [USERNAME]!"
     */
-    var username = prompt('Qual o seu nome?');
+    var username = prompt('Qual o seu nome?') || 'Desconhecido';
 
-    if (!username) {
-        username = 'Desconhecido';
-    }
-
-    alert('Bem vindo ' + username);
+    alert('Bem vindo ' + username + '!');
 
     /*
     Agora, pergunte ao usuário "Qual o seu e-mail?", atribuindo o resultado à
@@ -36,26 +32,25 @@
     - Selecione o input de "Nome", atribuindo-o à uma variável chamada
     `$inputUsername`.
     */
-    var $inputUsername = doc.querySelector('[type="text"]');
+    var $inputUsername = document.querySelector('[type="text"]');
 
     /*
     - Selecione o input de "Email", atribuindo-o à uma variável chamada
     `$inputEmail`.
     */
-    var $inputEmail = doc.querySelector('[type="email"]');
-    console.log($inputEmail);
+    var $inputEmail = document.querySelector('[type="email"]');
 
     /*
     - Selecione o campo de "Mensagem", atribuindo-o à uma variável chamada
     `$message`.
     */
-    var $message = doc.querySelector('textarea');
+    var $message = document.querySelector('textarea');
 
     /*
     - Selecione o botão de envio do formulário, atribuindo-o à uma variável
     chamada `$button`.
     */
-    var $button = doc.querySelector('button');
+    var $button = document.querySelector('button');
 
     /*
     Preencha os campos de "Nome" e "Email" que estão no documento com os valores
@@ -93,26 +88,26 @@
         event.preventDefault();
 
         if (!$inputUsername.value) {
-            alert('Preencha o nome do usuário!');
+            return alert('Preencha o nome do usuário!');
         }
 
         if (!$inputEmail.value) {
-            alert('Preencha o e-mail!');
-        }
-
-        if (!$message.value) {
-            alert('Preencha a mensagem!');
+            return alert('Preencha o e-mail!');
         }
 
         if (!isValidEmail($inputEmail.value)) {
-            alert('Entre com um e-mail válido!');
+            return alert('Entre com um e-mail válido!');
         }
 
-        if (confirm('Tem certeza que deseja enviar o formulário?')) {
-           alert('Enviado com sucesso!'); 
-        } else {
-            alert('Não enviado.');
+        if (!$message.value) {
+            return alert('Preencha a mensagem!');
         }
+
+        if (!confirm('Tem certeza que deseja enviar o formulário?')) {
+            return alert('Não enviado.');
+        }
+
+        return alert('Enviado com sucesso!');
 
     }, false);
 
@@ -143,7 +138,7 @@
         - "agua_@evida.br.com"
     */
     function isValidEmail(email) {
-        return new RegExp('^[\\w.+_]+[^_]@\\w+\.\\w{2,}(?:\.\\w{2})?$').test(email);
+        return /^[\w.+]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email);
     }
 
 })(window, document);
