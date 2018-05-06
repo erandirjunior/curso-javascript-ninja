@@ -1,5 +1,7 @@
 (function() {
 
+  'use strict';
+
   /*
   Crie dois objetos, que serão duas pessoas. Cada um deve ter as propriedades
   `name` e `lastName`, preenchidos com o nome e sobrenome da pessoa.
@@ -45,8 +47,8 @@
   function sum() {
     console.log(arguments);
     
-    return Array.prototype.reduce.call(arguments, function(acumulated, now, index) {
-      return acumulated += +now;
+    return Array.prototype.reduce.call(arguments, function(acumulated, actualItem) {
+      return +acumulated + +actualItem;
     }, 0);
   }
 
