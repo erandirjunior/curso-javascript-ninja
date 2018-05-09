@@ -28,107 +28,76 @@
 	- Ao pressionar o botão "CE", o input deve ficar zerado.
 	*/
 
-	var $inputDisplay = document.querySelector('[data-js="display"]');
+	var $visor = document.querySelector('[data-js="visor"]');
 
-	var $buttonOne 		= document.querySelector('[data-js="1"]');
-	var $buttonTwo 		= document.querySelector('[data-js="2"]');
-	var $buttonThree 	= document.querySelector('[data-js="3"]');
-	var $buttonFour 	= document.querySelector('[data-js="4"]');
-	var $buttonFive 	= document.querySelector('[data-js="5"]');
-	var $buttonSix 		= document.querySelector('[data-js="6"]');
-	var $buttonSeven 	= document.querySelector('[data-js="7"]');
-	var $buttonEight 	= document.querySelector('[data-js="8"]');
-	var $buttonNine 	= document.querySelector('[data-js="9"]');
-	var $buttonZero 	= document.querySelector('[data-js="0"]');
+	var $buttonsNumbers = document.querySelectorAll('[data-js="button-number"]');
 
-	var $buttonSum 				= document.querySelector('[data-js="sum"]');
-	var $buttonSubtract 		= document.querySelector('[data-js="subtract"]');
-	var $buttonMultiplication 	= document.querySelector('[data-js="multiplication"]');
-	var $buttonDivision 		= document.querySelector('[data-js="division"]');
+	var $buttonCe = document.querySelector('[data-js="button-ce"]');
 
-	var $buttonResult 	= document.querySelector('[data-js="result"]');
-	var $buttonReset 	= document.querySelector('[data-js="reset"]');
+	var $buttonOperations = document.querySelectorAll('[data-js="buttons-operation"]');
 
-	$inputDisplay.value = 0;
+	var $buttonEqual = document.querySelector('[data-js="button-equal"]');
 
-	$buttonOne.addEventListener('click', addValueCalculate, false);
-	$buttonTwo.addEventListener('click', addValueCalculate, false);
-	$buttonThree.addEventListener('click', addValueCalculate, false);
-	$buttonFour.addEventListener('click', addValueCalculate, false);
-	$buttonFive.addEventListener('click', addValueCalculate, false);
-	$buttonSix.addEventListener('click', addValueCalculate, false);
-	$buttonSeven.addEventListener('click', addValueCalculate, false);
-	$buttonEight.addEventListener('click', addValueCalculate, false);
-	$buttonNine.addEventListener('click', addValueCalculate, false);
-	$buttonZero.addEventListener('click', addValueCalculate, false);
+	Array.prototype.forEach.call($buttonsNumbers, function(button) {
+		button.addEventListener('click', handleClickNumber, false);
+	});
 
-	$buttonSum.addEventListener('click', operation, false);
-	$buttonSubtract.addEventListener('click', operation, false);
-	$buttonMultiplication.addEventListener('click', operation, false);
-	$buttonDivision.addEventListener('click', operation, false);
+	Array.prototype.forEach.call($buttonOperations, function(button) {
+		button.addEventListener('click', handleClickOperation, false);
+	});
 
-	$buttonResult.addEventListener('click', calculate, false);
-	$buttonReset.addEventListener('click', resetCalculate, false);
+	$buttonCe.addEventListener('click', handleClickCE, false);
 
-	function calculate(event) {
-		event.preventDefault();
+	$buttonEqual.addEventListener('click', handleClickEqual, false);
 
-		if (verifyLastValue($inputDisplay.value)) {
-			return replaceValue('');
+	function handleClickNumber() {
+		$visor.value += this.value;
+	}
+
+	function handleClickOperation() {
+		$visor.value = removeLastItemIfIsAndOperator($visor.value);
+		$visor.value += this.value;
+	}
+
+	function handleClickCE() {
+		$visor.value = 0;		
+	}
+
+	function isLastItemAndOperation(number) {
+		var operations = ['+', '-', '*', '/'];
+		var lastItem = number.split('').pop();
+		return operations.some(function(operator) {
+			return operator === lastItem;
+		});
+	}
+
+	function removeLastItemIfIsAndOperator(number) {
+		if (isLastItemAndOperation(number)) {
+			return number.slice(0, -1);
 		}
 
-		var values = $inputDisplay.value.split(/(\d+)/);
+		return number;
+	}
 
-		var operator = {
-
-			'+': function(number1, number2) {
-				return +number1 + +number2;
-			},
-			'-': function(number1, number2) {
-				return +number1 - +number2;
-			},
-			'*': function(number1, number2) {
-				return +number1 * +number2;
-			},
-			'*': function(number1, number2) {
-				return +number1 * +number2;
+	function handleClickEqual() {
+		$visor.value = removeLastItemIfIsAndOperator($visor.value);
+		var allValues = $visor.value.match(/\d+[+*/-]?/g);
+		$visor.value = allValues.reduce(function(accumuluted, actual) {
+			var firstValue = accumuluted.slice(0, -1);
+			var operator = accumuluted.split('').pop();
+			var lastValue = removeLastItemIfIsAndOperator(actual);
+			var lastOperator = isLastItemAndOperation(actual) ? actual.split('').pop() : '';
+			switch(operator) {
+				case '+' :
+					return (Number(firstValue) + Number(lastValue)) + lastOperator;
+				case '-' :
+					return (Number(firstValue) - Number(lastValue)) + lastOperator;
+				case '*' :
+					return (Number(firstValue) * Number(lastValue)) + lastOperator;
+				case '/' :
+					return (Number(firstValue) / Number(lastValue)) + lastOperator;
 			}
-		}
-
-		$inputDisplay.value = operator[values[2]](values[1], values[3]);
-	}
-
-	function resetCalculate(event) {
-		event.preventDefault();
-		$inputDisplay.value = 0;		
-	}
-
-	function operation(event) {
-		event.preventDefault();
-
-		if (verifyLastValue($inputDisplay.value)) {
-			return replaceValue(this.value);
-		}
-
-		$inputDisplay.value += this.value;
-	}
-
-	function addValueCalculate(event) {
-		event.preventDefault();
-
-		if ($inputDisplay.value == 0) {
-			$inputDisplay.value = '';
-		}
-
-		$inputDisplay.value += this.value;
-	}
-
-	function replaceValue(value) {
-		$inputDisplay.value = $inputDisplay.value.replace(/[+\-*/]$/, value);
-	}
-
-	function verifyLastValue(str) {
-		return str.match(/([+\-*/])$/g);
+		});
 	}
 
 })(window, document);
