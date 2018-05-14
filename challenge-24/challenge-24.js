@@ -20,11 +20,16 @@
   var $buttonCE = getQuerySelector('[data-js="button-ce"]');
   var $buttonEqual = getQuerySelector('[data-js="button-equal"]');
 
-  addEventElementsArray($buttonsNumbers, handleClickNumber);
-  addEventElementsArray($buttonsOperations, handleClickOperation);
+  function initialize() {
+    initEvents();
+  }
 
-  addEvent($buttonCE, handleClickCE);
-  addEvent($buttonEqual, handleClickEqual);
+  function initEvents() {
+    addEventElementsArray($buttonsNumbers, handleClickNumber);
+    addEventElementsArray($buttonsOperations, handleClickOperation);
+    addEvent($buttonCE, handleClickCE);
+    addEvent($buttonEqual, handleClickEqual);
+  }
 
   function handleClickNumber() {
     addValue(this.value);
@@ -40,23 +45,29 @@
   }
 
   function isLastItemAnOperation(number) {
-    var operations = ['+', '-', 'x', '÷'];
+    var operations = getOperations();
     var lastItem = getLastValue(number);
     return operations.some(function(operator) {
       return operator === lastItem;
     });
   }
 
-  function removeLastItemIfItIsAnOperator(number) {
-    if(isLastItemAnOperation(number)) {
-      return getPieceValue(number);
+  function getOperations() {
+    return Array.prototype.map.call($buttonsOperations, function(button) {
+      return button.value;
+    });
+  }
+
+  function removeLastItemIfItIsAnOperator(string) {
+    if(isLastItemAnOperation(string)) {
+      return getPieceValue(string);
     }
-    return number;
+    return string;
   }
 
   function handleClickEqual() {
     setOverlapValue(removeLastItemIfItIsAnOperator($visor.value));
-    $visor.value = doOperation();
+    $visor.value = calculateAllValues();
   }
 
   function getQuerySelector(element) {
@@ -97,33 +108,43 @@
     return $visor.value.match(regex);
   }
 
-  function doOperation() {
-    var allValues = getMatch(/\d+[+x÷-]?/g);
+  function calculateAllValues() {
+    var allValues = getMatch(getRegexOperations());
     return allValues.reduce(function(accumulated, actual) {
       var firstValue = getPieceValue(accumulated);
       var operator = getLastValue(accumulated);
       var lastValue = removeLastItemIfItIsAnOperator(actual);
-      var lastOperator = isLastItemAnOperation(actual) ? getLastValue(actual) : '';
-      return doCalc(operator, firstValue, lastValue) + lastOperator;
+      var lastOperator = getLastOperator(actual);
+      return doOperation(operator, firstValue, lastValue) + lastOperator;
     });
   }
 
-  function doCalc(operator, firstValue, secondValue) {
+  function getLastOperator(value) {
+    return isLastItemAnOperation(value) ? getLastValue(value) : '';
+  }
+
+  function getRegexOperations() {
+    return new RegExp('\\d+[' + getOperations().join('') + ']?', 'g');
+  }
+
+  function doOperation(operator, firstValue, lastValue) {
     var calculator = {
-      '+': function(firstValue, secondValue) {
-        return Number(firstValue) + Number(secondValue);
+      '+': function(firstValue, lastValue) {
+        return Number(firstValue) + Number(lastValue);
       },
-      '-': function(firstValue, secondValue) {
-        return Number(firstValue) - Number(secondValue);
+      '-': function(firstValue, lastValue) {
+        return Number(firstValue) - Number(lastValue);
       },
-      '*': function(firstValue, secondValue) {
-        return Number(firstValue) * Number(secondValue);
+      'x': function(firstValue, lastValue) {
+        return Number(firstValue) * Number(lastValue);
       },
-      '÷': function(firstValue, secondValue) {
-        return Number(firstValue) / Number(secondValue);
+      '÷': function(firstValue, lastValue) {
+        return Number(firstValue) / Number(lastValue);
       }
     }
-    return calculator[operator](firstValue, secondValue);
+    return calculator[operator](firstValue, lastValue);
   }
+
+  initialize();
 
 })(window, document);
