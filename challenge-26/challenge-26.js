@@ -24,25 +24,25 @@
 	Só passe para o próximo problema quando tiver resolvido o anterior :)
 	*/
 	
-	function DOM(string) {
-		this.element = document.querySelectorAll(string);
-
-		this.on = function(event, callback) {
-			Array.prototype.forEach.call(this.element, function(item) {
-				item.addEventListener('click', callback);
-			});
-		};
-
-		this.off = function(event, callback) {
-			Array.prototype.forEach.call(this.element, function(item) {
-				item.removeEventListener('click', callback);
-			});
-		};
-
-		this.get = function(event, callback) {
-			return this.element;
-		};
+	function DOM(elements) {
+		this.element = document.querySelectorAll(elements);
 	}
+
+	DOM.prototype.on = function on(eventType, callback) {
+		Array.prototype.forEach.call(this.element, function(element) {
+			element.addEventListener(eventType, callback);
+		});
+	};
+
+	DOM.prototype.off = function off(eventType, callback) {
+		Array.prototype.forEach.call(this.element, function(element) {
+			element.removeEventListener(eventType, callback);
+		});
+	};
+
+	DOM.prototype.get = function get() {
+		return this.element;
+	};
 
 	var $a = new DOM('[data-js="link"]');
 	$a.on('click', function(e) {
