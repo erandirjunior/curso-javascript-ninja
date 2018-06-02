@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Carros Web</title>
+	<style>
+		label {
+			display: block;
+			margin: 5px 0px 5px;
+		}
+
+		b {
+			font-size: 40px;
+		}
+
+		table {
+		    border-collapse: collapse;
+		}
+
+		table, td, th {
+		    border: 1px solid black;
+		    padding: 10px;
+		    text-align: center;
+		    margin-top: 4px;
+		}
+
+		img {
+			width: 50px;
+		}
+	</style>
+</head>
+<body>
+
+	<div>
+		<p><b data-js="site-information"></b> <span data-js="site-information"></span></p>
+	</div>
+
+	<form data-js="form">
+		<label for="">Imagem do carro: <input type="text"></label>
+		<label for="">Marca / Modelo: <input type="text"></label>
+		<label for="">Ano: <input type="text"></label>
+		<label for="">Placa: <input type="text"></label>
+		<label for="">Cor: <input type="text"></label>
+		<button type="submit">Cadastrar Veículo</button>
+	</form>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Imagem do Carro</th>
+				<th>Marca / Modelo</th>
+				<th>Ano</th>
+				<th>Placa</th>
+				<th>Cor</th>
+			</tr>
+		</thead>
+		<tbody data-js="body-table"></tbody>
+	</table>
+	<script src="DOM.js"></script>
+	<script src="challenge-29.js"></script>
+</body>
+</html>
