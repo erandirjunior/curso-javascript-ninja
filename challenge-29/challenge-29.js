@@ -1,4 +1,4 @@
-(function(DOM) {
+(function($) {
 
   'use strict';
 
@@ -37,11 +37,11 @@
   que será nomeado de "app".
   */
 
-  function app() {
-    var $informationSite = new DOM('[data-js="site-information"]');
-    var $form = new DOM('[data-js="form"]');
-    var $tableBody = new DOM('[data-js="body-table"]');
-    var fragment = document.createDocumentFragment('tr');
+  var app = (function() {
+    var $informationSite = $('[data-js="site-information"]');
+    var $form = $('[data-js="form"]');
+    var $tableBody = $('[data-js="body-table"]');
+    var $fragment = document.createDocumentFragment('tr');
     var ajax = new XMLHttpRequest();
     $informationSite.on('load', handleInformationSite);
     $form.on('submit', handleFormCar);
@@ -49,10 +49,11 @@
     function handleFormCar(event) {
       event.preventDefault();
       $tableBody.get()[0].appendChild(createDataTableFragment());
+      clearForm();
     }
 
     function handleInformationSite() {
-      ajax.open('GET', 'http://localhost:8080/company.json');
+      ajax.open('GET', '/company.json');
       ajax.send();
       ajax.addEventListener('readystatechange', handleReadyStateChange);
     }
@@ -66,37 +67,44 @@
     }
 
     function createDataTableFragment() {
-      fragment.appendChild(handleTrTdTable());
-      return fragment;
+      $fragment.appendChild(handleTrTdTable());
+      return $fragment;
     }
 
     function handleTrTdTable() {
-      var tr = createElement('tr');
-      var tdImagem = createElement('td');
-      var tdMarca = createElement('td');
-      var tdAno = createElement('td');
-      var tdPlaca = createElement('td');
-      var tdCor = createElement('td');
-      var image = createElement('img');
+      var $tr = createElement('tr');
+      var $tdImage = createElement('td');
+      var $tdBrand = createElement('td');
+      var $tdYear = createElement('td');
+      var $tdPlate = createElement('td');
+      var $tdColor = createElement('td');
+      var $image = createElement('img');
 
-      image.setAttribute('src', $form.get()[0][0].value);
-      tdImagem.appendChild(image);
-      tdMarca.textContent = $form.get()[0][1].value;
-      tdAno.textContent = clearAge();
-      tdPlaca.textContent = $form.get()[0][3].value;
-      tdCor.textContent = $form.get()[0][4].value;
+      $image.setAttribute('src', $form.get()[0][0].value);
+      $tdImage.appendChild($image);
+      $tdBrand.textContent = $form.get()[0][1].value;
+      $tdYear.textContent = clearAge();
+      $tdPlate.textContent = $form.get()[0][3].value;
+      $tdColor.textContent = $form.get()[0][4].value;
 
-      tr.appendChild(tdImagem);
-      tr.appendChild(tdMarca);
-      tr.appendChild(tdAno);
-      tr.appendChild(tdPlaca);
-      tr.appendChild(tdCor);
+      $tr.appendChild($tdImage);
+      $tr.appendChild($tdBrand);
+      $tr.appendChild($tdYear);
+      $tr.appendChild($tdPlate);
+      $tr.appendChild($tdColor);
 
-      return tr;
+      return $tr;
+    }
+
+    function clearForm() {
+      $form.get()[0][0].value = '';
+      $form.get()[0][1].value = '';
+      $form.get()[0][2].value = '';
+      $form.get()[0][3].value = '';
+      $form.get()[0][4].value = '';
     }
 
     function clearAge() {
-      console.log($form.get()[0][2].value.replace(/\D/, ''));
       return $form.get()[0][2].value.replace(/\D/g, '');
     }
 
@@ -112,9 +120,11 @@
       return ajax.readyState == 4 && ajax.status == 200;
     }
 
-    return handleInformationSite;
-  }
+    return {
+      init: handleInformationSite
+    }
+  })();
 
-  window.addEventListener('load', app()());
+  app.init();
 
 })(window.DOM);

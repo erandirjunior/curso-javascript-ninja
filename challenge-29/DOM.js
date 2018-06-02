@@ -2,6 +2,10 @@
 	'use strict';
 
 	function DOM(elements) {
+    if (!(this instanceof DOM)) {
+      return new DOM(elements);
+    }
+
     this.element = document.querySelectorAll(elements);
   }
 
