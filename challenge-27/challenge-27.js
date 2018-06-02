@@ -60,15 +60,15 @@
 		return Array.prototype.reduce.apply(this.element, arguments);
 	};
 
-	DOM.prototype.reduceRight = function reduceRight(callback) {
+	DOM.prototype.reduceRight = function reduceRight() {
 		return Array.prototype.reduceRight.apply(this.element, arguments);
 	};
 
-	DOM.prototype.every = function every(callback) {
+	DOM.prototype.every = function every() {
 		return Array.prototype.every.apply(this.element, arguments);
 	};
 
-	DOM.prototype.some = function some(callback) {
+	DOM.prototype.some = function some() {
 		return Array.prototype.some.apply(this.element, arguments);
 	};
 
