@@ -40,6 +40,7 @@ app.get('/user/:username', function(req, res) {
 	var hasUser = users.some(function(user) {
 		return user.username === username;
 	});
+
 	if (hasUser) {
 		return res.json(users.filter(function(user) {
 			return user.username === username;
@@ -50,9 +51,21 @@ app.get('/user/:username', function(req, res) {
 
 app.post('/user', function(req, res) {
 	var username = req.body.username;
-	var age = req.body.age;
+	var user = req.body.user;
+	var age = req.body.age
+	var hasUser = users.some(function(user) {
+		return user.username === username;
+	});
 
-	res.json({ username: username, age: age });
+	if (!hasUser) {
+		users.push({
+			username: username,
+			user: user,
+			age: age
+		});
+	}
+
+	res.json(users);
 });
 
 // Seleciona a porta utilizada
