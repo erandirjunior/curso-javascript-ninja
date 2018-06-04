@@ -24,5 +24,10 @@ describe('# SUM', function() {
 
 	it('Should SUM return an error if the parameters has not a number', function() {
 		expect(sum('a', 'b')).to.be.an('error');
-	})
+	});
+
+	it('Assert', function() {
+		var assert = require('assert');
+		assert.strictEqual(sum(20, 30), 50, 'Message');
+	});
 });
