@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Scripts Inline</title>
+</head>
+<body>
+	<h1>NÃO É UMA BOA PRÁTICA UTILIZAR EVENTOS INLINE</h1>
+
+	<!-- void não retorna nada -->
+	<a href="javscript:void(0)">Boom!</a>
+
+	<!-- Utilizando somente "javascript:" faz com que a execução padrão do elemento não aconteça -->
+	<a href="javscript:" onclick="boom()">Boom!</a>
+
+	<script>
+		function boom() {
+			alert('boom');
+		}
+	</script>
+</body>
+</html>
